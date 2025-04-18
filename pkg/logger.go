@@ -23,3 +23,14 @@ func WithField(key string, value interface{}) *Entry {
 func WithFields(fields Fields) *Entry {
 	return defaultLogger.WithFields(fields)
 }
+func Info(args ...interface{}) {
+	NewEntry(defaultLogger).Info(args...)
+}
+
+func Warn(args ...interface{}) {
+	NewEntry(defaultLogger).Warn(args...)
+}
+
+func Error(args ...interface{}) {
+	NewEntry(defaultLogger).Error(args...)
+}
