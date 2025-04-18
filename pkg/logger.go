@@ -1,4 +1,4 @@
-package logrus
+package logx
 
 var defaultLogger = New()
 
