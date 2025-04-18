@@ -41,7 +41,12 @@ func (entry *Entry) WithFields(fields Fields) *Entry {
 		}
 		data[k] = v
 	}
-	return &Entry{Logger: entry.Logger, Data: data, Time: entry.Time, Context: entry.Context}
+	return &Entry{
+		Logger:  entry.Logger,
+		Data:    data,
+		Time:    entry.Time,
+		Context: entry.Context,
+	}
 }
 
 func (entry *Entry) log(level Level, msg string) {
@@ -53,7 +58,18 @@ func (entry *Entry) log(level Level, msg string) {
 }
 
 func (entry *Entry) write() {
-	logLine := fmt.Sprintf("[%s] [%s] %s", entry.Time.Format(time.RFC3339), entry.Level.String(), entry.Message)
+	fieldStr := ""
+	for k, v := range entry.Data {
+		fieldStr += fmt.Sprintf("%s=%v ", k, v)
+	}
+
+	logLine := fmt.Sprintf("[%s] [%s] %s%s",
+		entry.Time.Format(time.RFC3339),
+		entry.Level.String(),
+		fieldStr,
+		entry.Message,
+	)
+
 	fmt.Fprintln(os.Stdout, logLine)
 }
 
@@ -68,8 +84,3 @@ func (entry *Entry) Warn(args ...interface{}) {
 func (entry *Entry) Error(args ...interface{}) {
 	entry.log(ErrorLevel, fmt.Sprint(args...))
 }
-
-// Optional: add these if you want
-// func (entry *Entry) Debug(args ...interface{}) { ... }
-// func (entry *Entry) Fatal(args ...interface{}) { ... os.Exit(1) }
-// func (entry *Entry) Panic(args ...interface{}) { ... panic(...) }
