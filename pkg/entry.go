@@ -8,8 +8,6 @@ import (
 	"time"
 )
 
-var ErrorKey = "error"
-
 type Entry struct {
 	Logger  *Logger
 	Data    Fields
@@ -49,12 +47,11 @@ func (entry *Entry) WithFields(fields Fields) *Entry {
 	}
 }
 
-func (entry *Entry) log(level Level, msg string) {
-	newEntry := entry.WithFields(nil)
-	newEntry.Time = time.Now()
-	newEntry.Level = level
-	newEntry.Message = msg
-	newEntry.write()
+func (entry *Entry) Log(level Level, msg string) {
+	entry.Level = level
+	entry.Time = time.Now()
+	entry.Message = msg
+	entry.write()
 }
 
 func (entry *Entry) write() {
@@ -71,16 +68,4 @@ func (entry *Entry) write() {
 	)
 
 	fmt.Fprintln(os.Stdout, logLine)
-}
-
-func (entry *Entry) Info(args ...interface{}) {
-	entry.log(InfoLevel, fmt.Sprint(args...))
-}
-
-func (entry *Entry) Warn(args ...interface{}) {
-	entry.log(WarnLevel, fmt.Sprint(args...))
-}
-
-func (entry *Entry) Error(args ...interface{}) {
-	entry.log(ErrorLevel, fmt.Sprint(args...))
 }
