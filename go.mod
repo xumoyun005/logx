@@ -1,3 +1,3 @@
-module github.com/xumoyun005/gi-library
+module github.com/xumoyun005/logx
 
 go 1.24.1
