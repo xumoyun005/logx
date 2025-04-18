@@ -34,3 +34,6 @@ func Warn(args ...interface{}) {
 func Error(args ...interface{}) {
 	NewEntry(defaultLogger).Error(args...)
 }
+func Panic(args ...interface{}) {
+	NewEntry(defaultLogger).Panic(args...)
+}

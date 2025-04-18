@@ -96,3 +96,8 @@ func (entry *Entry) Errorf(format string, args ...interface{}) {
 func (entry *Entry) Println(args ...interface{}) {
 	entry.log(InfoLevel, fmt.Sprintln(args...)) 
 }
+func (entry *Entry) Panic(args ...interface{}) {
+	msg := fmt.Sprint(args...)
+	entry.log(PanicLevel, msg)
+	panic(msg)
+}

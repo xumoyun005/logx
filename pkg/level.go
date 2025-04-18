@@ -8,6 +8,7 @@ const (
 	InfoLevel Level = iota
 	WarnLevel
 	ErrorLevel
+	PanicLevel
 )
 
 func (l Level) String() string {
@@ -18,6 +19,8 @@ func (l Level) String() string {
 		return "WARN"
 	case ErrorLevel:
 		return "ERROR"
+	case PanicLevel:
+		return "PANIC"
 	default:
 		return "UNKNOWN"
 	}
